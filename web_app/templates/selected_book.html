@@ -3,43 +3,61 @@
 
 {% block content %}
 <style>
-    .book-image {
-        width: 100%;
-        max-width: 20rem;
-        height: auto;
-        display: block;
-        margin: auto;
+    body {
+    background-color: #f0f0f0; /* Light gray background */
+}
+
+.container.book-details-container {
+    background-color: #fff; /* White container background */
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Box shadow for depth */
+}
+
+/* Header styles */
+.book-details-header {
+    background-color: #4984c3; /* Blue header background */
+    color: #fff; /* White text color */
+    padding: 10px 0;
+    text-align: center;
+    border-radius: 5px 5px 0 0;
+}
+
+.book-details-header h1 {
+    font-size: 24px;
+}
+
+/* Book image styles */
+.book-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border: 1px solid #ddd; /* Image border */
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Image shadow for depth */
+}
+
+/* Book info styles */
+.book-info {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.book-info p {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+/* Media query for responsive design (adjust as needed) */
+@media (max-width: 768px) {
+    .container.book-details-container {
+        margin-top: 10px;
     }
-    .book-card {
-        max-width: 100%;
-        margin: 20px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    }
-    .book-details {
-        color: #4267B2; /* Adjust the color to match your theme */
-        margin-bottom: 10px;
-    }
-    .book-details strong {
-        font-weight: bold;
-        color: #34568B; /* A darker shade for the field names */
-    }
-    .card-body {
-        text-align: left; /* Align text to the left */
-        padding: 20px; /* Add some padding for aesthetics */
-    }
-    .card-header {
-        background-color: #007bff;
-        color: white;
-    }
-    .book-details-container {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start; /* Align items to the start */
-    }
-    .container {
-        padding-top: 50px; /* Adds space above the card */
-        padding-bottom: 50px; /* Adds space below the card */
-    }
+}
+
+
 </style>
 
 <div class="container d-flex justify-content-center">
@@ -54,7 +72,7 @@
             <p class="book-details"><strong>Author:</strong> {{ book_details.author }}</p>
             <p class="book-details"><strong>Published Date:</strong> {{ book_details.published_date }}</p>
             <p class="book-details"><strong>Condition:</strong> {{ book_details.condition }}</p>
-            <p class="book-details"><strong>List Price:</strong> ${{ book_details.listPrice }}</p>
+            <p class="book-details"><strong>List Price:</strong> ${{ book_details.list_price }}</p>
         </div>
     </div>
 </div>
