@@ -20,8 +20,8 @@ Make a copy of this template repo (as necessary). Clone your copy of the repo on
 Setup and activate a new Anaconda virtual environment:
 
 ```sh
-conda create -n flask-sheets-env-2023 python=3.10
-conda activate flask-sheets-env-2023
+conda create -n book-x-2 python=3.10
+conda activate book-x-2
 ```
 
 Install package dependencies:
