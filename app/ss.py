@@ -89,14 +89,20 @@ class SpreadsheetService:
         else:
             next_id = 1
 
+        
+        
+
+
         # Create a new dictionary with the updated values
         updated_record = {
             "id": next_id,
             "title": new_record["title"],
             "author": new_record["author"],
             "published_date": new_record["published_date"],
+            "condition": new_record["condition"],
+            "list_price": new_record["list_price"],
             "image_url": new_record["image_url"],
-            "created_at": self.generate_timestamp(),
+            "created_at": '2023-03-08 19:59:16.471152+00:00',
         }
 
         new_row = model_class(updated_record).to_row
@@ -148,8 +154,10 @@ class Book:
         self.title = attrs.get("title")
         self.author = attrs.get("author")
         self.published_date = attrs.get("published_date")
+        self.condition = attrs.get("condition")
+        self.list_price = attrs.get("list_price")
         self.image_url = attrs.get("image_url")
-        self.created_at = attrs.get("create_at")
+        self.created_at = attrs.get("created_at")
         
         
         
@@ -157,4 +165,4 @@ class Book:
 
     @property
     def to_row(self):
-        return[self.id, self.title, self.author, self.published_date, self.image_url, self.created_at]
+        return[self.id, self.title, self.author, self.published_date, self.condition, self.list_price, self.image_url, self.created_at]

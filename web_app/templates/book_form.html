@@ -1,0 +1,65 @@
+{% extends "bootstrap_5_layout.html" %}
+{% set active_page = "home" %}
+
+{% block content %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Georgetown Book Exchange</title>
+    <!-- Keep the same stylesheet reference used in home.html -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+<body>
+    <div class="container book-form-container">
+        <header>
+            <h1>Enter Listing Details</h1>
+        </header>
+
+        <form id="bookForm" action="/listing-search" method="POST">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title:</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+        
+            <div class="mb-3">
+                <label for="authorFirstName" class="form-label">Author First Name:</label>
+                <input type="text" class="form-control" id="authorFirstName" name="authorFirstName" required>
+            </div>
+        
+            <div class="mb-3">
+                <label for="authorLastName" class="form-label">Author Last Name:</label>
+                <input type="text" class="form-control" id="authorLastName" name="authorLastName" required>
+            </div>
+        
+            <div class="mb-3">
+                <label for="condition" class="form-label">Condition:</label>
+                <select class="form-select" id="condition" name="condition">
+                    <option value="Excellent">Excellent</option>
+                    <option value="Great">Great</option>
+                    <option value="Good">Good</option>
+                    <option value="Bad">Bad</option>
+                    <option value="Terrible">Terrible</option>
+                </select>
+            </div>
+
+            <!-- Add a "List Price" field for numeric, positive, and currency formatted input -->
+            <div class="mb-3">
+                <label for="listPrice" class="form-label">List Price (USD):</label>
+                <input type="number" class="form-control" id="listPrice" name="listPrice" step="0.01" min="0" required>
+            </div>
+        
+            
+
+            <button type="submit" class="btn btn-primary mb-3">Submit</button>
+            
+        </form>
+        
+    </div>
+    <!-- Include any additional scripts if needed -->
+</body>
+</html>
+{% endblock %}
