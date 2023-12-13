@@ -31,10 +31,16 @@ def get_book_details(title, condition=None, list_price=None):
             # Prepare the list of book details
             book_details = []
             for book in top_books:
+                authors = book.get('authors', 'Author not found')
+
+                # Process the authors to remove quotes and brackets
+                if isinstance(authors, list):
+                    authors = ', '.join(authors)  # Join multiple authors with a comma
+                authors = authors.replace("[", "").replace("]", "").replace("'", "").replace('"', '')
                 # Add condition and listPrice to book_info
                 book_info = {
                     'title': book.get('title', 'Title not found'),
-                    'author': book.get('authors', 'Author not found'),
+                    'author': authors,
                     'image_url': book.get('image', 'Image not available'),
                     'published_date': book.get('date_published', 'Publish date not available'),
                     'condition': condition,  # Now included in book_info
