@@ -92,15 +92,23 @@ def about():
 @home_routes.route("/account")
 def account():
     print("Displaying account information")
-    ss=SpreadsheetService()
-    curr_email = session.get("current_user")
-    sheet, records =ss.get_records("books")
-    print(records)
-    my_books = []
-    for book in records:
-        if book['user_email'] == curr_email:
-            my_books.append(book)
-        else:
-            print("you have not posted any books")
-    return render_template("account.html", my_books=my_books)
+    ss = SpreadsheetService()
+
+    my_books = []  # Initialize an empty list for user's books
+    user = None  # Initialize user as None
+
+    # Check if there is a current user in the session
+    if 'current_user' in session:
+        user = session['current_user']
+        user_email = user.get('email')  # Assuming the user's email is stored under the key 'email'
+
+        # Get all records from the 'books' sheet
+        sheet, records = ss.get_records("books")
+
+        # Filter records where user_email matches
+        my_books = [record for record in records if record.get('user_email') == user_email]
+
+    # Pass both my_books and user to the template
+    return render_template("account.html", my_books=my_books, user=user)
+
 
