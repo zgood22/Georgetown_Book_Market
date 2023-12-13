@@ -1,0 +1,129 @@
+{% extends "bootstrap_5_layout.html" %}
+{% set active_page = "user_profile" %}
+
+{% block content %}
+
+    <div class="container" style="max-width: 350px;">
+
+        <h1>User Profile</h1>
+        <div class="card card-body bg-light mt-3">
+
+                <div class="mb-3">
+                    <label for="email-input" class="form-label">Email:</label>
+                    <input disabled type="text" name="email" id="email-input" class="form-control" value="{{ user.email }}" title="Email cannot be changed" style="cursor: not-allowed;">
+                </div>
+
+                <div class="mb-3">
+                    <label for="first-name-input" class="form-label">First Name:</label>
+                    <input disabled type="text" name="first_name" id="first-name-input" class="form-control" value="{{ user.given_name }}" >
+                </div>
+
+                <div class="mb-3">
+                    <label for="last-name-input" class="form-label">Last Name:</label>
+                    <input disabled type="text" name="last_name" id="last-name-input" class="form-control" value="{{ user.family_name }}">
+                </div>
+
+        </div>
+
+        <div class="card card-body mt-3">
+            <p class="mt-0 mb-0">
+                <a href="/logout">Logout</a>
+            </p>
+        </div>
+
+        <head>
+            <title>Book Listings</title>
+            <style>
+                .book-container {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 20px;
+                    justify-content: center;
+                }
+                .book {
+                    flex: 1 0 calc(33.333% - 20px); /* Three cards per row with adjusted flex property */
+                    margin-bottom: 20px;
+                }
+                .card {
+                    display: flex;
+                    flex-direction: column; /* Set flex direction to column for equal height */
+                    height: 100%;
+        
+                    background: linear-gradient(to bottom, #ffffff, #f7f7f7);
+                    border: none; /* Optional: removes the border */
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+                }
+                .card-img-top {
+                    width: 100%;
+                    height: 200px; /* Fixed height for images */
+                    object-fit: contain; /* Contain fit for images */
+                }
+                .card-body {
+                    flex-grow: 1; /* Allows the card body to expand and fill the space */
+                    overflow: auto; /* Adds scrolling for overflow content */
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between; /* Spacing out content */
+                }
+                .book h2 {
+                    font-size: 1rem;
+                    margin-bottom: 0.5rem; /* Adjusted margin */
+                }
+                .book p {
+                    margin: 5px 0; /* Reduced vertical margin */
+                }
+                .book form {
+                    margin-top: auto; /* Pushes the form to the bottom of the card */
+                }
+                .book button {
+                    background-color: #007bff;
+                    color: white;
+                    border: none;
+                    padding: 5px 15px;
+                    cursor: pointer;
+                }
+                .book-title {
+                    font-size: 1rem;
+                }
+                .header {
+                    background-color: #007bff;
+                    color: white;
+                    padding: 10px;
+                    text-align: center;
+                    font-size: 2rem;
+                }
+            </style>
+            
+        </head>
+        <body>
+            <div class="header">Book Listings</div>
+            <div class="book-container">
+                {% for book in my_books %}
+                    <div class="book">
+                        <div class="card shadow-sm">
+                            <img src="{{ book.image_url }}" class="card-img-top" alt="Book Image">
+                            <div class="card-body">
+                                <h2 class="card-title">{{ book.title }}</h2>
+                                <p class="card-text"><strong>Author:</strong> {{ book.author }}</p>
+                                <p class="card-text"><strong>Published Date:</strong> {{ book.published_date }}</p>
+                                <p class="card-text"><strong>Condition:</strong> {{ book.condition }}</p>
+                                <p class="card-text"><strong>List Price:</strong> {{ book.list_price }}</p>
+                                
+                                <!-- Form for posting book details -->
+                                <form action="/selected-book" method="post">
+                                    <input type="hidden" name="title" value="{{ book.title }}">
+                                    <input type="hidden" name="author" value="{{ book.author }}">
+                                    <input type="hidden" name="published_date" value="{{ book.published_date }}">
+                                    <input type="hidden" name="condition" value="{{ book.condition }}">
+                                    <input type="hidden" name="list_price" value="{{ book.list_price }}">
+                                    <input type="hidden" name="image_url" value="{{ book.image_url }}">
+                                    <button type="submit" class="btn btn-primary">Post Details</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </body>
+        </html>
+{% endblock %}

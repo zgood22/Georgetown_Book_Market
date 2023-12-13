@@ -1,7 +1,7 @@
 
 # this is the "web_app/routes/home_routes.py" file...
 
-from flask import Blueprint, request, render_template
+from flask import Blueprint, request, render_template, session
 from app.ss import SpreadsheetService
 
 
@@ -88,4 +88,19 @@ def about():
     print("ABOUT...")
     #return "About Me"
     return render_template("about.html")
+
+@home_routes.route("/account")
+def account():
+    print("Displaying account information")
+    ss=SpreadsheetService()
+    curr_email = session.get("current_user")
+    sheet, records =ss.get_records("books")
+    print(records)
+    my_books = []
+    for book in records:
+        if book['user_email'] == curr_email:
+            my_books.append(book)
+        else:
+            print("you have not posted any books")
+    return render_template("account.html", my_books=my_books)
 
