@@ -28,8 +28,12 @@ NAV_ICON_CLASS = "bi-globe"
 NAV_COLOR_CLASS = "navbar-dark bg-primary"
 
 # for google oauth login:
-GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID1")
-GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET1")
+GOOGLE_CLIENT_ID1 = os.getenv("GOOGLE_CLIENT_ID1")
+GOOGLE_CLIENT_SECRET1 = os.getenv("GOOGLE_CLIENT_SECRET1")
+
+#Google Sheets API
+GOOGLE_CLIENT_ID=os.getenv("GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_SECRET=os.getenv("GOOGLE_CLIENT_SECRET")
 
 # for google analytics (universal analytics):
 GA_TRACKER_ID = os.getenv("GA_TRACKER_ID", default="G-OOPS")

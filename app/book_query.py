@@ -12,7 +12,7 @@ ISBNdb_key = os.getenv("ISBNdb_key")
 # Initialize SpreadsheetService
 ss = SpreadsheetService()
 
-def get_book_details(title, condition=None, listPrice=None):
+def get_book_details(title, condition=None, list_price=None):
     headers = {'Authorization': ISBNdb_key}
     url = f'https://api.isbndb.com/books/{title}'
 
@@ -37,7 +37,7 @@ def get_book_details(title, condition=None, listPrice=None):
                     'image_url': book.get('image', 'Image not available'),
                     'published_date': book.get('date_published', 'Publish date not available'),
                     'condition': condition,  # Now included in book_info
-                    'listPrice': listPrice   # Now included in book_info
+                    'list_price': list_price,   # Now included in book_info
                 }
                 
                 book_details.append(book_info)

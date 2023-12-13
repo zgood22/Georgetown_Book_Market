@@ -70,7 +70,11 @@ class SpreadsheetService:
 
         #print(f"GETTING RECORDS FROM SHEET: '{sheet_name}'")
         sheet = self.get_sheet(sheet_name) #> <class 'gspread.models.Worksheet'>
-        records = sheet.get_all_records() #> <class 'list'>
+        raw_records = sheet.get_all_records() #> <class 'list'>
+
+        records = [record for record in raw_records if any(value != '' for value in record.values())]
+
+
         for record in records:
             if record.get("created_at"):
                 record["created_at"] = self.parse_timestamp(record["created_at"])
@@ -82,9 +86,15 @@ class SpreadsheetService:
         sheet, records = self.get_records(sheet_name)
         next_row_number = len(records) + 2  # plus headers plus one
 
+
+        #print(records)
+        
+
+
         # auto-increment integer identifier
         if any(records):
-            existing_ids = [r["id"] for r in records]
+        # Ensure each id is an integer
+            existing_ids = [int(r["id"]) for r in records if isinstance(r["id"], (int, str)) and str(r["id"]).isdigit()]
             next_id = max(existing_ids) + 1
         else:
             next_id = 1

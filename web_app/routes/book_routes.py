@@ -35,12 +35,12 @@ def listing_search():
     author_lname = str(request_data.get("authorLastName"))
     author_fullname = author_fname + " " + author_lname
     condition = request_data.get("condition")
-    listPrice = request_data.get("listPrice")
+    list_price = request_data.get("list_price")
     book_title = str(request_data.get("title"))
-    book_results = get_book_details(book_title, condition, listPrice)
+    book_results = get_book_details(book_title, condition, list_price)
     # ... existing code ...
-    print(condition, listPrice)
-    return render_template('listing_search.html', book_title=book_title, author_fullname=author_fullname, condition=condition, listPrice=listPrice, book_results=book_results)
+    print(condition, list_price)
+    return render_template('listing_search.html', book_title=book_title, author_fullname=author_fullname, condition=condition, list_price=list_price, book_results=book_results)
 
 
 @book_routes.route('/selected-book', methods=["GET", "POST"])
@@ -60,7 +60,7 @@ def selected_book():
         'published_date': request.form.get('published_date'),
         'image_url': request.form.get('image_url'),
         'condition': request.form.get('condition'),
-        'listPrice': request.form.get('listPrice'),
+        'list_price': request.form.get('list_price'),
         'created_at': request.form.get('created_at'),
     }
     
