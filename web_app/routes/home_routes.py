@@ -4,6 +4,7 @@
 from flask import Blueprint, request, render_template
 from app.ss import SpreadsheetService
 
+
 home_routes = Blueprint("home_routes", __name__)
 
 
@@ -80,6 +81,7 @@ def index():
     records = records[:10]
 
     return render_template("home.html", books=records)
+
 
 @home_routes.route("/about")
 def about():

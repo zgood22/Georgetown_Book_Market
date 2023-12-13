@@ -61,6 +61,7 @@ def selected_book():
         'image_url': request.form.get('image_url'),
         'condition': request.form.get('condition'),
         'list_price': request.form.get('list_price'),
+
         'created_at': request.form.get('created_at'),
     }
     

@@ -70,9 +70,11 @@ class SpreadsheetService:
 
         #print(f"GETTING RECORDS FROM SHEET: '{sheet_name}'")
         sheet = self.get_sheet(sheet_name) #> <class 'gspread.models.Worksheet'>
+
         raw_records = sheet.get_all_records() #> <class 'list'>
 
         records = [record for record in raw_records if any(value != '' for value in record.values())]
+
 
 
         for record in records:
@@ -85,7 +87,6 @@ class SpreadsheetService:
 
         sheet, records = self.get_records(sheet_name)
         next_row_number = len(records) + 2  # plus headers plus one
-
 
         #print(records)
         
