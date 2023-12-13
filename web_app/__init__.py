@@ -12,6 +12,7 @@ from app.spreadsheet_service import SpreadsheetService
 from web_app.routes.home_routes import home_routes
 from web_app.routes.auth_routes import auth_routes
 from web_app.routes.user_routes import user_routes
+from web_app.routes.book_routes import book_routes
 
 load_dotenv()
 
@@ -27,8 +28,8 @@ NAV_ICON_CLASS = "bi-globe"
 NAV_COLOR_CLASS = "navbar-dark bg-primary"
 
 # for google oauth login:
-GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
-GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID1")
+GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET1")
 
 # for google analytics (universal analytics):
 GA_TRACKER_ID = os.getenv("GA_TRACKER_ID", default="G-OOPS")
@@ -95,6 +96,7 @@ def create_app(spreadsheet_service=None):
     app.register_blueprint(home_routes)
     app.register_blueprint(auth_routes)
     app.register_blueprint(user_routes)
+    app.register_blueprint(book_routes)
 
     return app
 
