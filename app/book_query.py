@@ -3,6 +3,8 @@ import os
 import requests
 from app.ss import SpreadsheetService
 
+
+
 # Load environment variables from a .env file
 load_dotenv()
 
@@ -12,7 +14,7 @@ ISBNdb_key = os.getenv("ISBNdb_key")
 # Initialize SpreadsheetService
 ss = SpreadsheetService()
 
-def get_book_details(title, condition=None, list_price=None):
+def get_book_details(title, genre=None, condition=None, list_price=None):
 
     headers = {'Authorization': ISBNdb_key}
     url = f'https://api.isbndb.com/books/{title}'
@@ -39,6 +41,7 @@ def get_book_details(title, condition=None, list_price=None):
                 authors = authors.replace("[", "").replace("]", "").replace("'", "").replace('"', '')
                 # Add condition and listPrice to book_info
                 book_info = {
+                    'genre': genre,
                     'title': book.get('title', 'Title not found'),
                     'author': authors,
                     'image_url': book.get('image', 'Image not available'),
@@ -48,6 +51,7 @@ def get_book_details(title, condition=None, list_price=None):
 
                 }
                 
+               
                 book_details.append(book_info)
 
             return book_details

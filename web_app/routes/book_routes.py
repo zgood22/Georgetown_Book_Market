@@ -31,16 +31,18 @@ def listing_search():
         request_data = dict(request.args)
         print("URL PARAMS:", request_data)
 
-    author_fname = str(request_data.get("authorFirstName"))
-    author_lname = str(request_data.get("authorLastName"))
-    author_fullname = author_fname + " " + author_lname
+    
+    
+    author_fullname = str(request_data.get("authorFullName"))
+    genre = request_data.get("genre")
+    
     condition = request_data.get("condition")
     list_price = request_data.get("list_price")
     book_title = str(request_data.get("title"))
-    book_results = get_book_details(book_title, condition, list_price)
+    book_results = get_book_details(book_title, genre, condition, list_price)
     # ... existing code ...
-    print(condition, list_price)
-    return render_template('listing_search.html', book_title=book_title, author_fullname=author_fullname, condition=condition, list_price=list_price, book_results=book_results)
+    print(genre)
+    return render_template('listing_search.html', book_results=book_results)
 
 
 @book_routes.route('/selected-book', methods=["GET", "POST"])
@@ -55,18 +57,18 @@ def selected_book():
         print("URL PARAMS:", request_data)
 
     book_details = {
+        'genre': request.form.get('genre'),
         'title': request.form.get('title'),
         'author': request.form.get('author'),
         'published_date': request.form.get('published_date'),
         'image_url': request.form.get('image_url'),
         'condition': request.form.get('condition'),
         'list_price': request.form.get('list_price'),
-
         'created_at': request.form.get('created_at'),
     }
     
 
-
+    
     ss = SpreadsheetService()
     print("Book Details:", book_details)
     ss.create_records("books", book_details)

@@ -79,6 +79,7 @@
                         <h2 class="card-title">{{ book.title }}</h2>
                         <p class="card-text"><strong>Author:</strong> {{ book.author }}</p>
                         <p class="card-text"><strong>Published Date:</strong> {{ book.published_date }}</p>
+                        <p class="card-text"><strong>Genre:</strong> {{ book.genre }}</p>
                         <p class="card-text"><strong>Condition:</strong> {{ book.condition }}</p>
                         <p class="card-text"><strong>List Price:</strong> {{ book.list_price }}</p>
                         
@@ -86,6 +87,7 @@
                         <form action="/selected-book" method="post">
                             <input type="hidden" name="title" value="{{ book.title }}">
                             <input type="hidden" name="author" value="{{ book.author }}">
+                            <input type="hidden" name="genre" value="{{ book.genre }}">
                             <input type="hidden" name="published_date" value="{{ book.published_date }}">
                             <input type="hidden" name="condition" value="{{ book.condition }}">
                             <input type="hidden" name="list_price" value="{{ book.list_price }}">
