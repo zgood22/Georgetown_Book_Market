@@ -2,6 +2,7 @@
 # this is the "web_app/routes/home_routes.py" file...
 
 from flask import Blueprint, request, render_template
+from app.ss import SpreadsheetService
 
 home_routes = Blueprint("home_routes", __name__)
 
@@ -70,13 +71,15 @@ books = [
 ]
 
 
+
 @home_routes.route("/")
 @home_routes.route("/home")
 def index():
-    print("HOME...")
-    #return "Welcome Home"
+    ss=SpreadsheetService()
+    sheet, records =ss.get_records("books")
+    records = records[:10]
 
-    return render_template("home.html", books=books)
+    return render_template("home.html", books=records)
 
 @home_routes.route("/about")
 def about():
