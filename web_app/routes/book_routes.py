@@ -1,72 +1,105 @@
-from flask import Blueprint, request, render_template
-from app.book_query import get_book_details
-from app.ss import SpreadsheetService
+
+
+import os
+from dotenv import load_dotenv
+
+from flask import Flask
+from authlib.integrations.flask_client import OAuth
+
+from app import APP_ENV, APP_VERSION
+from app.spreadsheet_service import SpreadsheetService
+
+from web_app.routes.home_routes import home_routes
+from web_app.routes.auth_routes import auth_routes
+from web_app.routes.user_routes import user_routes
+
+load_dotenv()
+
+SECRET_KEY = os.getenv("SECRET_KEY", default="super secret") # IMPORTANT: override in production
+
+APP_TITLE = "My App"
+
+# https://icons.getbootstrap.com/
+NAV_ICON_CLASS = "bi-globe"
+
+# https://getbootstrap.com/docs/5.1/components/navbar/#color-schemes
+# https://getbootstrap.com/docs/5.1/customize/color/#theme-colors
+NAV_COLOR_CLASS = "navbar-dark bg-primary"
+
+# for google oauth login:
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID1")
+GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET1")
+
+# for google analytics (universal analytics):
+GA_TRACKER_ID = os.getenv("GA_TRACKER_ID", default="G-OOPS")
+#GA_DOMAIN = os.getenv("GA_DOMAIN", default="http://localhost:5000") # in production set to "________"
+
+
+def create_app(spreadsheet_service=None):
+
+    if not spreadsheet_service:
+        spreadsheet_service = SpreadsheetService()
+
+    #
+    # INIT
+    #
+
+    app = Flask(__name__)
+
+    #
+    # CONFIG
+    #
+
+    # for flask flash messaging:
+    app.config["SECRET_KEY"] = SECRET_KEY
+
+    # for front-end (maybe doesn't belong here but its ok):
+    app.config["APP_ENV"] = APP_ENV
+    app.config["APP_VERSION"] = APP_VERSION
+    app.config["APP_TITLE"] = APP_TITLE
+    app.config["NAV_ICON_CLASS"] = NAV_ICON_CLASS
+    app.config["NAV_COLOR_CLASS"] = NAV_COLOR_CLASS
+
+    # for client-side google analytics:
+    app.config["GA_TRACKER_ID"] = GA_TRACKER_ID
+    #app.config["GA_DOMAIN"] = GA_DOMAIN
+
+    # set timezone to mimic production mode when running locally:
+    os.environ["TZ"] = "UTC"
+
+    #
+    # AUTH
+    #
+
+    oauth = OAuth(app)
+    oauth.register(
+        name="google",
+        server_metadata_url="https://accounts.google.com/.well-known/openid-configuration",
+        client_kwargs={"scope": "openid email profile"},
+        client_id=GOOGLE_CLIENT_ID,
+        client_secret=GOOGLE_CLIENT_SECRET,
+        #authorize_params={"access_type": "offline"} # give us the refresh token! see: https://stackoverflow.com/questions/62293888/obtaining-and-storing-refresh-token-using-authlib-with-flask
+    )
+    app.config["OAUTH"] = oauth
+
+    #
+    # SERVICES
+    #
+
+    app.config["SPREADSHEET_SERVICE"] = spreadsheet_service
+
+    #
+    # ROUTES
+    #
+
+    app.register_blueprint(home_routes)
+    app.register_blueprint(auth_routes)
+    app.register_blueprint(user_routes)
+
+    return app
 
 
 
-#from web_app.book_routes import listing_search
-
-from app.ss import SpreadsheetService
-
-
-
-book_routes = Blueprint("book_routes", __name__)
-
-
-# Assuming you have an existing Blueprint named 'book_routes'
-# If not, replace 'book_routes' with your Blueprint name or app
-
-@book_routes.route('/new-listing')
-def new_listing():
-    return render_template('book_form.html')
-
-@book_routes.route('/listing-search', methods=["GET", "POST"])
-def listing_search():
-    if request.method == "POST":
-        # for data sent via POST request, form inputs are in request.form:
-        request_data = dict(request.form)
-        print("FORM DATA:", request_data)
-    else:
-        # for data sent via GET request, url params are in request.args
-        request_data = dict(request.args)
-        print("URL PARAMS:", request_data)
-
-    author_fname = str(request_data.get("authorFirstName"))
-    author_lname = str(request_data.get("authorLastName"))
-    author_fullname = author_fname + " " + author_lname
-    condition = request_data.get("condition")
-    listPrice = request_data.get("listPrice")
-    book_title = str(request_data.get("title"))
-    book_results = get_book_details(book_title, condition, listPrice)
-    # ... existing code ...
-    print(condition, listPrice)
-    return render_template('listing_search.html', book_title=book_title, author_fullname=author_fullname, condition=condition, listPrice=listPrice, book_results=book_results)
-
-
-@book_routes.route('/selected-book', methods=["GET", "POST"])
-def selected_book():
-    if request.method == "POST":
-        # for data sent via POST request, form inputs are in request.form:
-        request_data = dict(request.form)
-        print("FORM DATA:", request_data)
-    else:
-        # for data sent via GET request, url params are in request.args
-        request_data = dict(request.args)
-        print("URL PARAMS:", request_data)
-
-    book_details = {
-        'title': request.form.get('title'),
-        'author': request.form.get('author'),
-        'published_date': request.form.get('published_date'),
-        'image_url': request.form.get('image_url'),
-        'condition': request.form.get('condition'),
-        'listPrice': request.form.get('listPrice'),
-        'created_at': request.form.get('created_at'),
-    }
-    
-
-
-    ss = SpreadsheetService()
-    print("Book Details:", book_details)
-    ss.create_records("books", book_details)
-    return render_template('selected_book.html', book_details=book_details)
+if __name__ == "__main__":
+    my_app = create_app()
+    my_app.run(debug=True)
