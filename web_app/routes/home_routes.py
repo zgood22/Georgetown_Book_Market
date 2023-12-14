@@ -1,7 +1,7 @@
 
 # this is the "web_app/routes/home_routes.py" file...
 
-from flask import Blueprint, request, render_template, session
+from flask import Blueprint, request, render_template, session, redirect, url_for
 from app.ss import SpreadsheetService
 
 
@@ -161,3 +161,16 @@ def send_inquiry():
 
     print(inquiry_text)
     return render_template("send-inquiry.html", inquiry_text=inquiry_text)
+
+@home_routes.route("/delist-book", methods=["POST"])
+def delist_book():
+    ss=SpreadsheetService()
+    book_title = request.form.get('book_title')
+    current_user = user = session['current_user']
+    user_email = user.get('email')
+    try:
+        ss.remove_record("books", book_title, user_email)
+        print("records found and removed")
+    except:
+        print("No records found for user and title")
+    return redirect(url_for('home_routes.account'))
