@@ -160,7 +160,7 @@ def send_inquiry():
     inquiry_text = request.args.get('inquiry_text')
 
     print(inquiry_text)
-    return render_template("send-inquiry.html", inquiry_text=inquiry_text)
+    return render_template("send_inquiry.html", inquiry_text=inquiry_text)
 
 @home_routes.route("/delist-book", methods=["POST"])
 def delist_book():

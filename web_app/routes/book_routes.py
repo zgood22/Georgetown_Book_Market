@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template
+from flask import Blueprint, request, render_template, flash, redirect, url_for, session
 from app.book_query import get_book_details
 from app.ss import SpreadsheetService
 
@@ -18,7 +18,12 @@ book_routes = Blueprint("book_routes", __name__)
 
 @book_routes.route('/new-listing')
 def new_listing():
-    return render_template('book_form.html')
+    try:
+        current_user = session['current_user']
+        return render_template('book_form.html')
+    except:
+        flash("you must sign in to register books")
+        return redirect(url_for('home_routes.index'))
 
 @book_routes.route('/listing-search', methods=["GET", "POST"])
 def listing_search():
