@@ -19,3 +19,6 @@ gunicorn
 
 # testing:
 pytest
+
+#Sendgrid -- if Implemented
+sendgrid==6.5.0

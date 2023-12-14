@@ -1,8 +1,9 @@
 
 # this is the "web_app/routes/home_routes.py" file...
 
-from flask import Blueprint, request, render_template, session, redirect, url_for
+from flask import Blueprint, request, render_template, session, redirect, url_for, flash
 from app.ss import SpreadsheetService
+from app.email_service import send_email
 
 
 home_routes = Blueprint("home_routes", __name__)
@@ -78,7 +79,7 @@ books = [
 def index():
     ss=SpreadsheetService()
     sheet, records =ss.get_records("books")
-    records = records[:10]
+    records = records[:12]
 
     return render_template("home.html", books=records)
 
@@ -166,11 +167,20 @@ def send_inquiry():
 def delist_book():
     ss=SpreadsheetService()
     book_title = request.form.get('book_title')
-    current_user = user = session['current_user']
-    user_email = user.get('email')
+    current_user = session['current_user'] 
+    user_email = current_user.get('email')
     try:
         ss.remove_record("books", book_title, user_email)
         print("records found and removed")
     except:
         print("No records found for user and title")
     return redirect(url_for('home_routes.account'))
+
+@home_routes.route("/inquiry-sent", methods=['POST'])
+def inquiry_sent():
+    inquiry_text = request.form.get('inquiry_text')
+    seller_email = request.form.get('seller_email')
+    send_email(seller_email, "YOU HAVE A POTENTIAL BOOK BUYER", inquiry_text)
+    flash("Your inquiry has been sent")
+    return redirect(url_for('home_routes.index'))
+

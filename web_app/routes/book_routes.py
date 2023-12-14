@@ -22,7 +22,7 @@ def new_listing():
         current_user = session['current_user']
         return render_template('book_form.html')
     except:
-        flash("you must sign in to register books")
+        flash("You Must Sign In to Register Books")
         return redirect(url_for('home_routes.index'))
 
 @book_routes.route('/listing-search', methods=["GET", "POST"])
