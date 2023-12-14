@@ -1,12 +1,60 @@
 {% extends "bootstrap_5_layout.html" %}
-{% set active_page = "about" %}
+{% set active_page = "purchase" %}
 
 {% block content %}
 
-    <h1>Purchase</h1>
+<div class="container mt-4">
+    <div class="row">
+        <!-- Book Detail and Seller Information Cards Column -->
+        <div class="col-lg-8 col-md-12 mb-4">
+            <!-- Book Details Card -->
+            <div class="card shadow-sm mb-4">
+                <div class="row g-0">
+                    <div class="col-md-5">
+                        <img src="{{ book['image_url'] }}" class="img-fluid rounded-start" alt="{{ book['title'] }}">
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ book['title'] }}</h5>
+                            <p class="card-text">Author: {{ book['author'] }}</p>
+                            <p class="card-text">Published Date: {{ book['published_date'] }}</p>
+                            <p class="card-text">Price: ${{ book['list_price'] }}</p>
+                            <p class="card-text">Condition: {{ book['condition'] }}</p>
+                            <a href="#" class="btn btn-primary">Purchase</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    <p class="lead">This is the about page</p>
-
-    <p>Here is some more info!</p>
+            <!-- Inquiry Card -->
+            <div class="card bg-light shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Purchase Inquiry</h5>
+                    <form action="{{ url_for('home_routes.send_inquiry') }}" method="post">
+                        <div class="mb-3">
+                            <label for="inquiry-text" class="form-label">Enter Your Message to Seller:</label>
+                            <textarea class="form-control" id="inquiry_text" name="inquiry_text" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <input type="hidden" name="seller_email" value="{{ seller_email }}">
+                            <button type="submit" class="btn btn-primary">Send Inquiry</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Seller Information Card Column -->
+        <div class="col-lg-4 col-md-12">
+            <div class="card bg-light shadow-sm mb-4" style="height: 100%;"> <!-- Adjust height to match the book detail card -->
+                <div class="card-body">
+                    <h5 class="card-title">Seller Information</h5>
+                    <p class="card-text">Email: {{ seller_email }}</p>
+                    <p class="card-text">Name: {{ seller_name }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

@@ -1,7 +1,7 @@
 
 # this is the "web_app/routes/home_routes.py" file...
 
-from flask import Blueprint, request, render_template
+from flask import Blueprint, request, render_template, session
 from app.ss import SpreadsheetService
 
 
@@ -83,9 +83,81 @@ def index():
     return render_template("home.html", books=records)
 
 
-@home_routes.route("/purchase")
-def purchase():
-    print("ABOUT...")
-    #return "About Me"
-    return render_template("purchase.html")
 
+    
+
+
+
+@home_routes.route("/purchase", methods=["GET", "POST"])
+def purchase():
+    if request.method == "POST":
+        # for data sent via POST request, form inputs are in request.form:
+        request_data = dict(request.form)
+        print("FORM DATA:", request_data)
+
+
+    ss = SpreadsheetService()
+    sheet, records = ss.get_records("books")
+
+    # Get the book ID from URL parameters
+    book_id = request.args.get('id')
+
+    # Search for the book with the given ID
+    book = next((record for record in records if str(record.get("id")) == book_id), None)
+
+    if book:
+        # Fetch the seller's email and name
+        seller_email = book.get("user_email")
+        # Assume you have a way to fetch the seller's name based on the email
+        
+        
+        seller_name = book.get("user_name")  # Replace this with actual code to fetch the seller's name
+
+        return render_template("purchase.html", book=book, seller_email=seller_email, seller_name=seller_name)
+    else:
+        return "Book not found", 404
+
+
+
+
+
+@home_routes.route("/account")
+def account():
+    print("Displaying account information")
+    ss = SpreadsheetService()
+
+    my_books = []  # Initialize an empty list for user's books
+    user = None  # Initialize user as None
+
+    # Check if there is a current user in the session
+    if 'current_user' in session:
+        user = session['current_user']
+        user_email = user.get('email')  # Assuming the user's email is stored under the key 'email'
+
+        # Get all records from the 'books' sheet
+        sheet, records = ss.get_records("books")
+
+        # Filter records where user_email matches
+        my_books = [record for record in records if record.get('user_email') == user_email]
+
+    # Pass both my_books and user to the template
+    return render_template("account.html", my_books=my_books, user=user)
+
+
+@home_routes.route("/send-inquiry", methods=["GET", "POST"])
+def send_inquiry():
+
+    if request.method == "POST":
+        # for data sent via POST request, form inputs are in request.form:
+        request_data = dict(request.form)
+        print("FORM DATA:", request_data)
+    else:
+        # for data sent via GET request, url params are in request.args
+        request_data = dict(request.args)
+        print("URL PARAMS:", request_data)
+
+
+    inquiry_text = request.args.get('inquiry_text')
+
+    print(inquiry_text)
+    return render_template("send-inquiry.html", inquiry_text=inquiry_text)

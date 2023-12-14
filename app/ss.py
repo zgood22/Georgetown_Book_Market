@@ -9,6 +9,8 @@ import os
 from datetime import datetime, timezone
 from pprint import pprint
 
+from flask import session
+
 from dotenv import load_dotenv
 import gspread
 from gspread.exceptions import SpreadsheetNotFound
@@ -100,6 +102,17 @@ class SpreadsheetService:
         else:
             next_id = 1
 
+         #Get user email
+        def user_email():
+            if 'current_user' in session:
+                user_email = session['current_user']['email']
+                return user_email
+        
+        def user_name():
+            if 'current_user' in session:
+                user_name = session['current_user']['name']
+                return user_name
+        
         
         
 
@@ -107,6 +120,9 @@ class SpreadsheetService:
         # Create a new dictionary with the updated values
         updated_record = {
             "id": next_id,
+            "user_email": user_email(),
+            "user_name": user_name(),
+            "genre": new_record["genre"],
             "title": new_record["title"],
             "author": new_record["author"],
             "published_date": new_record["published_date"],
@@ -120,9 +136,7 @@ class SpreadsheetService:
 
         sheet.insert_rows([new_row], row=next_row_number)
 
-
-    
-
+   
 
 
 
@@ -162,6 +176,9 @@ class Order:
 class Book:
     def __init__(self, attrs):
         self.id = attrs.get("id")
+        self.user_email = attrs.get("user_email")
+        self.user_name = attrs.get("user_name")
+        self.genre = attrs.get("genre")
         self.title = attrs.get("title")
         self.author = attrs.get("author")
         self.published_date = attrs.get("published_date")
@@ -176,4 +193,4 @@ class Book:
 
     @property
     def to_row(self):
-        return[self.id, self.title, self.author, self.published_date, self.condition, self.list_price, self.image_url, self.created_at]
+        return[self.id, self.user_email, self.user_name, self.genre, self.title, self.author, self.published_date, self.condition, self.list_price, self.image_url, self.created_at]

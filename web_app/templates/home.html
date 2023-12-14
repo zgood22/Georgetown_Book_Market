@@ -13,7 +13,9 @@
     <div class="col-md-2">
       <!-- Sidebar with buttons -->
       <div class="list-group mb-3">
-        <button type="button" class="btn btn-primary mb-3">Account Page</button>
+        <button type="button" class="btn btn-primary mb-3">
+          <a href="{{ url_for('home_routes.account') }}" style="color: white; text-decoration: none;">Account Page</a>
+          </button>
         <button type="button" class="btn btn-primary mb-3">
           <a href="{{ url_for('book_routes.new_listing') }}" style="color: white; text-decoration: none;">+ Create New Listing</a>
         </button>
@@ -34,6 +36,7 @@
         <a href="#" class="list-group-item list-group-item-action">Health & Fitness</a>
         <a href="#" class="list-group-item list-group-item-action">History</a>
         <a href="#" class="list-group-item list-group-item-action">Mystery</a>
+        <a href="#" class="list-group-item list-group-item-action">Non-Fiction</a>
         <a href="#" class="list-group-item list-group-item-action">Science & Technology</a>
         <a href="#" class="list-group-item list-group-item-action">Textbooks</a>
 
@@ -57,7 +60,8 @@
                 <p class="card-text">Condition: {{ book['condition'] }}</p>
                 <!-- "Purchase Book" button -->
                 <div class="mt-auto">
-                  <a href="{{ url_for('home_routes.purchase') }}" style="color: rgb(36, 73, 217); text-decoration: none;">Purchase Book</a>
+                  <a href="{{ url_for('home_routes.purchase', id=book['id']) }}" style="color: rgb(36, 73, 217); text-decoration: none;">Purchase Book</a>
+
                 </div>
               </div>
             </div>
