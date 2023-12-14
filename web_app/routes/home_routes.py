@@ -83,11 +83,11 @@ def index():
     return render_template("home.html", books=records)
 
 
-@home_routes.route("/about")
-def about():
+@home_routes.route("/purchase")
+def purchase():
     print("ABOUT...")
     #return "About Me"
-    return render_template("about.html")
+    return render_template("purchase.html")
 
 @home_routes.route("/account")
 def account():
