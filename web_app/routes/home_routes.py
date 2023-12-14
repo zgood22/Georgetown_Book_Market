@@ -83,13 +83,19 @@ def index():
     return render_template("home.html", books=records)
 
 
-@home_routes.route("/purchase", methods=["GET", "POST"])
+
     
 
 
 
-@home_routes.route("/purchase", methods=["GET"])
+@home_routes.route("/purchase", methods=["GET", "POST"])
 def purchase():
+    if request.method == "POST":
+        # for data sent via POST request, form inputs are in request.form:
+        request_data = dict(request.form)
+        print("FORM DATA:", request_data)
+
+
     ss = SpreadsheetService()
     sheet, records = ss.get_records("books")
 
@@ -100,9 +106,17 @@ def purchase():
     book = next((record for record in records if str(record.get("id")) == book_id), None)
 
     if book:
-        return render_template("purchase.html", book=book)
+        # Fetch the seller's email and name
+        seller_email = book.get("user_email")
+        # Assume you have a way to fetch the seller's name based on the email
+        
+        
+        seller_name = book.get("user_name")  # Replace this with actual code to fetch the seller's name
+
+        return render_template("purchase.html", book=book, seller_email=seller_email, seller_name=seller_name)
     else:
         return "Book not found", 404
+
 
 
 
@@ -130,3 +144,20 @@ def account():
     return render_template("account.html", my_books=my_books, user=user)
 
 
+@home_routes.route("/send-inquiry", methods=["GET", "POST"])
+def send_inquiry():
+
+    if request.method == "POST":
+        # for data sent via POST request, form inputs are in request.form:
+        request_data = dict(request.form)
+        print("FORM DATA:", request_data)
+    else:
+        # for data sent via GET request, url params are in request.args
+        request_data = dict(request.args)
+        print("URL PARAMS:", request_data)
+
+
+    inquiry_text = request.args.get('inquiry_text')
+
+    print(inquiry_text)
+    return render_template("/send-inquiry.html", inquiry_text=inquiry_text)
