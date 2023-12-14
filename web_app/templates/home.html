@@ -13,7 +13,9 @@
     <div class="col-md-2">
       <!-- Sidebar with buttons -->
       <div class="list-group mb-3">
-        <button type="button" class="btn btn-primary mb-3">Account Page</button>
+        <button type="button" class="btn btn-primary mb-3">
+          <a href="{{ url_for('home_routes.account') }}" style="color: white; text-decoration: none;">Account Page</a>
+          </button>
         <button type="button" class="btn btn-primary mb-3">
           <a href="{{ url_for('book_routes.new_listing') }}" style="color: white; text-decoration: none;">+ Create New Listing</a>
         </button>
