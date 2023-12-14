@@ -57,7 +57,8 @@
                 <p class="card-text">Condition: {{ book['condition'] }}</p>
                 <!-- "Purchase Book" button -->
                 <div class="mt-auto">
-                  <a href="{{ url_for('home_routes.purchase') }}" style="color: rgb(36, 73, 217); text-decoration: none;">Purchase Book</a>
+                  <a href="{{ url_for('home_routes.purchase', id=book['id']) }}" style="color: rgb(36, 73, 217); text-decoration: none;">Purchase Book</a>
+
                 </div>
               </div>
             </div>

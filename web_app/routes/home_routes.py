@@ -83,11 +83,29 @@ def index():
     return render_template("home.html", books=records)
 
 
-@home_routes.route("/purchase")
+@home_routes.route("/purchase", methods=["GET", "POST"])
+    
+
+
+
+@home_routes.route("/purchase", methods=["GET"])
 def purchase():
-    print("ABOUT...")
-    #return "About Me"
-    return render_template("purchase.html")
+    ss = SpreadsheetService()
+    sheet, records = ss.get_records("books")
+
+    # Get the book ID from URL parameters
+    book_id = request.args.get('id')
+
+    # Search for the book with the given ID
+    book = next((record for record in records if str(record.get("id")) == book_id), None)
+
+    if book:
+        return render_template("purchase.html", book=book)
+    else:
+        return "Book not found", 404
+
+
+
 
 @home_routes.route("/account")
 def account():

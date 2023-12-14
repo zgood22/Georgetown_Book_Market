@@ -1,12 +1,21 @@
 {% extends "bootstrap_5_layout.html" %}
-{% set active_page = "about" %}
+{% set active_page = "purchase" %}
 
 {% block content %}
 
-    <h1>Purchase</h1>
+<h1>Purchase Book</h1>
 
-    <p class="lead">This is the about page</p>
-
-    <p>Here is some more info!</p>
+<div class="card" style="width: 18rem;">
+    <img src="{{ book['image_url'] }}" class="card-img-top" alt="{{ book['title'] }}">
+    <div class="card-body">
+        <h5 class="card-title">{{ book['title'] }}</h5>
+        <p class="card-text">Author: {{ book['author'] }}</p>
+        <p class="card-text">Published Date: {{ book['published_date'] }}</p>
+        <p class="card-text">Price: ${{ book['list_price'] }}</p>
+        <p class="card-text">Condition: {{ book['condition'] }}</p>
+        <!-- Additional details and purchase button -->
+        <a href="#" class="btn btn-primary">Purchase</a>
+    </div>
+</div>
 
 {% endblock %}
