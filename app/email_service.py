@@ -8,25 +8,24 @@ from sendgrid.helpers.mail import Mail
 
 load_dotenv() # go look in the .env file for any env vars
 
-SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
+
 
 
 def send_email(recipient_email, subject, message):
     # Ensure that you have set SENDGRID_API_KEY in your environment variables
-    sendgrid_api_key = os.environ.get('SENDGRID_API_KEY')
+    SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 
-    if not sendgrid_api_key:
+    if not SENDGRID_API_KEY:
         raise ValueError("SendGrid API Key not found in environment variables")
 
     message = Mail(
-        from_email='jlm456@georgetown.edu',  # Replace with your SendGrid verified sender email
+        from_email='georgetown.book.exchange@gmail.com',
         to_emails=recipient_email,
         subject=subject,
         html_content=message
     )
-
     try:
-        sg = SendGridAPIClient(sendgrid_api_key)
+        sg = SendGridAPIClient(SENDGRID_API_KEY)
         response = sg.send(message)
         print(response.status_code)
         print(response.body)

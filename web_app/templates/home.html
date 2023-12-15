@@ -24,8 +24,12 @@
         </button>
       </div>
       <!-- Search Bar -->
-      <div class="mb-3">
-        <input type="text" class="form-control" placeholder="Search...">
+      <!-- Place this inside your existing HTML where you want the search bar -->
+    <form action="{{ url_for('home_routes.index') }}" method="get">
+      <input type="text" name="query" class="form-control" placeholder="Search for books...">
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
       </div>
       <!-- Sidebar with categories -->
       <div class="list-group">

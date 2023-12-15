@@ -79,9 +79,20 @@ books = [
 def index():
     ss=SpreadsheetService()
     sheet, records =ss.get_records("books")
-    records = records[:12]
+    #records = records[:12]
+    query = request.args.get('query')
 
-    return render_template("home.html", books=records)
+    if query:
+        # Function to search books based on query
+        total_books = ss.query_records("books", query)
+        books = total_books[:12]
+    else:
+        # Function to get all books if no query
+        books, total_books = ss.get_records("books")
+        books = total_books[:12]
+
+
+    return render_template("home.html", books=books)
 
 
 

@@ -164,6 +164,13 @@ class SpreadsheetService:
         else:
             print(f"No book titled '{book_title}' found for user '{user_email}'.")
 
+    def query_records(self, sheet_name:str, book_title: str):
+        sheet, records = self.get_records(sheet_name)
+        filtered_books = [book for book in records if book_title.lower() in book['title'].lower()]
+        return filtered_books
+
+        
+
    
 
 
