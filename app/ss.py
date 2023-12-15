@@ -171,6 +171,7 @@ class SpreadsheetService:
 
         
 
+
    
 
 
@@ -230,5 +231,6 @@ class Book:
     def to_row(self):
         return[self.id, self.user_email, self.user_name, self.genre, self.title, self.author, self.published_date, self.condition, self.list_price, self.image_url, self.created_at]
     
+
 
 

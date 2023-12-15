@@ -1,6 +1,7 @@
 
 # this is the "web_app/routes/home_routes.py" file...
 
+
 from flask import Blueprint, request, render_template, session, redirect, url_for, flash
 from app.ss import SpreadsheetService
 from app.email_service import send_email
@@ -93,6 +94,7 @@ def index():
 
 
     return render_template("home.html", books=books)
+
 
 
 
@@ -195,3 +197,6 @@ def inquiry_sent():
     flash("Your inquiry has been sent")
     return redirect(url_for('home_routes.index'))
 
+
+    print(inquiry_text)
+    return render_template("send-inquiry.html", inquiry_text=inquiry_text)
