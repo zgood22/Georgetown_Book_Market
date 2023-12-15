@@ -15,12 +15,12 @@ SENDER_ADDRESS = os.getenv("SENDER_ADDRESS")
 def send_email(recipient_email, subject, message):
     # Ensure that you have set SENDGRID_API_KEY in your environment variables
     SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
+    SENDGRID_API_KEY = "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"
 
-    if not SENDGRID_API_KEY:
-        raise ValueError("SendGrid API Key not found in environment variables")
+
 
     message = Mail(
-        from_email='georgetown.book.exchange@gmail.com',
+        from_email='jlm456@georgetown.edu',
         to_emails=recipient_email,
         subject=subject,
         html_content=message
