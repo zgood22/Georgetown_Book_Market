@@ -2,79 +2,34 @@
 {% set active_page = "home" %}
 
 {% block content %}
-<style>
-    body {
-    background-color: #f0f0f0; /* Light gray background */
-}
 
-.container.book-details-container {
-    background-color: #fff; /* White container background */
-    padding: 20px;
-    margin-top: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Box shadow for depth */
-}
-
-/* Header styles */
-.book-details-header {
-    background-color: #4984c3; /* Blue header background */
-    color: #fff; /* White text color */
-    padding: 10px 0;
-    text-align: center;
-    border-radius: 5px 5px 0 0;
-}
-
-.book-details-header h1 {
-    font-size: 24px;
-}
-
-/* Book image styles */
-.book-image {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-    border: 1px solid #ddd; /* Image border */
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Image shadow for depth */
-}
-
-/* Book info styles */
-.book-info {
-    margin-top: 20px;
-    text-align: center;
-}
-
-.book-info p {
-    font-size: 18px;
-    margin: 10px 0;
-}
-
-/* Media query for responsive design (adjust as needed) */
-@media (max-width: 768px) {
-    .container.book-details-container {
-        margin-top: 10px;
-    }
-}
-
-
-</style>
-
-<div class="container d-flex justify-content-center">
-    <div class="card book-card">
-        <h4 class="card-header bg-primary text-white mb-3 text-center">
-            {{ book_details.title }} has been listed successfully!
-        </h4>
-        <img class="card-img-top book-image" src="{{ book_details.image_url }}" alt="{{ book_details.title }} Book Image">
-        <div class="card-body book-details-container">
-            
-            <p class="book-details"><strong>Title:</strong> {{ book_details.title }}</p>
-            <p class="book-details"><strong>Author:</strong> {{ book_details.author }}</p>
-            <p class="book-details"><strong>Published Date:</strong> {{ book_details.published_date }}</p>
-            <p class="book-details"><strong>Genre:</strong> {{ book_details.genre }}</p>
-            <p class="book-details"><strong>Condition:</strong> {{ book_details.condition }}</p>
-            <p class="book-details"><strong>List Price:</strong> ${{ book_details.list_price }}</p>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <!-- Centered Book Detail Card Column -->
+        <div class="col-lg-6">
+            <!-- Book Details Card -->
+            <div class="card shadow-sm">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{ book_details.image_url }}" class="img-fluid rounded-start" alt="{{ book_details.title }}">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body text-center">
+                            <h4 class="card-header bg-primary text-white mb-3">{{ book_details.title }} has been listed successfully!</h4>
+                            <p class="book-details"><strong>Title:</strong> {{ book_details.title }}</p>
+                            <p class="book-details"><strong>Author:</strong> {{ book_details.author }}</p>
+                            <p class="book-details"><strong>Published Date:</strong> {{ book_details.published_date }}</p>
+                            <p class="book-details"><strong>Genre:</strong> {{ book_details.genre }}</p>
+                            <p class="book-details"><strong>Condition:</strong> {{ book_details.condition }}</p>
+                            <p class="book-details"><strong>List Price:</strong> ${{ book_details.list_price }}</p>
+                            <!-- Return Home Button -->
+                            <a href="{{ url_for('home_routes.index') }}" class="btn btn-primary mt-3">Return to Home Page</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
 {% endblock %}
