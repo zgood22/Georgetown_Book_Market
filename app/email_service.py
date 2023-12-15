@@ -20,7 +20,7 @@ def send_email(recipient_email, subject, message):
         raise ValueError("SendGrid API Key not found in environment variables")
 
     message = Mail(
-        from_email='georgetown.book.exchange@gmail.com',
+        from_email=SENDER_ADDRESS,
         to_emails=recipient_email,
         subject=subject,
         html_content=message
