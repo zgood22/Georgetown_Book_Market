@@ -37,6 +37,7 @@
                             <textarea class="form-control" id="inquiry_text" name="inquiry_text" rows="3" required></textarea>
                         </div>
                         <div class="mb-3">
+                            <input type="hidden" name="book_image_url" value="{{ book['image_url'] }}">
                             <input type="hidden" name="seller_email" value="{{ seller_email }}">
                             <button type="submit" class="btn btn-primary">Send Inquiry</button>
                         </div>

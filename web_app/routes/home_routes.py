@@ -43,6 +43,13 @@ def index():
 
 @home_routes.route("/purchase", methods=["GET", "POST"])
 def purchase():
+    try:
+        user = session['current_user']
+    except:
+        flash("You Must Be Signed In to Purchase A Book")
+        return redirect(url_for('home_routes.index'))
+
+    
     if request.method == "POST":
         # for data sent via POST request, form inputs are in request.form:
         request_data = dict(request.form)
@@ -133,7 +140,17 @@ def delist_book():
 def inquiry_sent():
     inquiry_text = request.form.get('inquiry_text')
     seller_email = request.form.get('seller_email')
-    send_email(seller_email, "YOU HAVE A POTENTIAL BOOK BUYER", inquiry_text)
+    user = session['current_user']
+    buyer_email = user.get('email') 
+    book_image = request.form.get('book_image')
+    html_content = f"""
+    <p>Greetings, you have a purchase inquiry from {buyer_email}. They left you this message about your listing:</p>
+    <blockquote>{inquiry_text}</blockquote>
+    <p>They are inquiring about the following book:</p>
+    <img src="{book_image}" alt="Book Image" style="max-width:100%;height:auto;">
+    """
+    send_email(seller_email, "YOU HAVE A POTENTIAL BOOK BUYER", html_content)
+    #Add images and add a message
 
 
     
@@ -141,5 +158,4 @@ def inquiry_sent():
     return redirect(url_for('home_routes.index'))
 
 
-    print(inquiry_text)
-    return render_template("send-inquiry.html", inquiry_text=inquiry_text)
+    #eturn render_template("send_inquiry.html", inquiry_text=inquiry_text)
