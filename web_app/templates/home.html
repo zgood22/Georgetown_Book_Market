@@ -32,21 +32,23 @@
     <div class="col-md-10">
       <h1>Listed Books for Sale</h1>
       <div class="row row-cols-1 row-cols-md-3 g-4">
-        {% for book in books %}
-          <div class="col">
-            <div class="card h-100 shadow-sm">
-              <img src="{{ book['image_url'] }}" class="card-img-top" alt="{{ book['title'] }} cover" style="height: 200px; object-fit: cover;">
-              <div class="card-body d-flex flex-column">
-                <h5 class="card-title">{{ book['title'] }}</h5>
-                <p class="card-text">Author: {{ book['author'] }}</p>
-                <!-- Additional book details here -->
-                <a href="{{ url_for('home_routes.purchase', id=book['id']) }}" class="btn btn-primary mt-auto">Purchase Book</a>
+          {% for book in books %}
+              <div class="col">
+                  <div class="card h-100 shadow-sm">
+                      <img src="{{ book['image_url'] }}" class="card-img-top" alt="{{ book['title'] }} cover" style="height: 200px; object-fit: cover;">
+                      <div class="card-body d-flex flex-column">
+                          <h5 class="card-title">{{ book['title'] }}</h5>
+                          <p class="card-text">Author: {{ book['author'] }}</p>
+                          <p class="card-text">Published Date: {{ book['published_date'] }}</p>
+                          <p class="card-text">Condition: {{ book['condition'] }}</p>
+                          <p class="card-text"><strong>Price: ${{ book['list_price'] }}</strong></p> <!-- Price included here -->
+                          <a href="{{ url_for('home_routes.purchase', id=book['id']) }}" class="btn btn-primary mt-auto">Purchase Book</a>
+                      </div>
+                  </div>
               </div>
-            </div>
-          </div>
-        {% endfor %}
+          {% endfor %}
       </div>
-    </div>
+  </div>
   </div>
 </div>
 
