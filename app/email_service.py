@@ -8,7 +8,8 @@ from sendgrid.helpers.mail import Mail
 
 load_dotenv() # go look in the .env file for any env vars
 
-
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
+SENDER_ADDRESS = os.getenv("SENDER_ADDRESS")
 
 
 def send_email(recipient_email, subject, message):

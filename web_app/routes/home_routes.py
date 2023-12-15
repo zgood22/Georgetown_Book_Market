@@ -128,11 +128,15 @@ def delist_book():
         print("No records found for user and title")
     return redirect(url_for('home_routes.account'))
 
-@home_routes.route("/inquiry-sent", methods=['POST'])
+@home_routes.route("/inquiry-sent", methods=["GET", "POST"])
+
 def inquiry_sent():
     inquiry_text = request.form.get('inquiry_text')
     seller_email = request.form.get('seller_email')
     send_email(seller_email, "YOU HAVE A POTENTIAL BOOK BUYER", inquiry_text)
+
+
+    
     flash("Your inquiry has been sent")
     return redirect(url_for('home_routes.index'))
 
