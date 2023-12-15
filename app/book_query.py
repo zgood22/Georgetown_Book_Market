@@ -28,7 +28,7 @@ def get_book_details(title, genre=None, condition=None, list_price=None):
 
         if books:
             # Limit the results to top 30 books
-            top_books = books[:30]
+            top_books = books[:20]
 
             # Prepare the list of book details
             book_details = []
@@ -64,4 +64,4 @@ def get_book_details(title, genre=None, condition=None, list_price=None):
 if __name__ == '__main__':
     book_search = input('Please enter the name of the book you are searching for: ')
     book_details = get_book_details(book_search)
-    print(book_details[1])  # This will print the second book's details if there are at least two books
+    print(book_details[0])  
