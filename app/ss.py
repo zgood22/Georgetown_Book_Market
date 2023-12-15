@@ -136,6 +136,42 @@ class SpreadsheetService:
 
         sheet.insert_rows([new_row], row=next_row_number)
 
+    def remove_record(self, sheet_name: str, book_title: str, user_email: str):
+        """
+        Removes a record from the specified sheet based on the book's title and user email.
+
+        Params:
+            sheet_name (str): the name of the sheet (e.g., "books")
+            book_title (str): the title of the book to remove
+            user_email (str): the email of the user associated with the book
+        """
+
+        # Get the sheet and all current records
+        sheet, records = self.get_records(sheet_name)
+        print("Step 1 achieved")
+
+        # Find the row number of the record to remove
+        row_to_remove = None
+        for idx, record in enumerate(records, start=2):  # start=2 to account for header row
+            if record.get("title") == book_title and record.get("user_email") == user_email:
+                row_to_remove = idx
+                break
+
+        # If the record is found, delete the row
+        if row_to_remove:
+            sheet.delete_rows(row_to_remove)
+            print(f"Book titled '{book_title}' by user '{user_email}' removed from '{sheet_name}' sheet.")
+        else:
+            print(f"No book titled '{book_title}' found for user '{user_email}'.")
+
+    def query_records(self, sheet_name:str, book_title: str):
+        sheet, records = self.get_records(sheet_name)
+        filtered_books = [book for book in records if book_title.lower() in book['title'].lower()]
+        return filtered_books
+
+        
+
+
    
 
 
@@ -194,3 +230,7 @@ class Book:
     @property
     def to_row(self):
         return[self.id, self.user_email, self.user_name, self.genre, self.title, self.author, self.published_date, self.condition, self.list_price, self.image_url, self.created_at]
+    
+
+
+

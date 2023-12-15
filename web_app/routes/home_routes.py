@@ -1,8 +1,10 @@
 
 # this is the "web_app/routes/home_routes.py" file...
 
-from flask import Blueprint, request, render_template, session
+
+from flask import Blueprint, request, render_template, session, redirect, url_for, flash
 from app.ss import SpreadsheetService
+from app.email_service import send_email
 
 
 home_routes = Blueprint("home_routes", __name__)
@@ -78,9 +80,21 @@ books = [
 def index():
     ss=SpreadsheetService()
     sheet, records =ss.get_records("books")
-    records = records[:10]
+    #records = records[:12]
+    query = request.args.get('query')
 
-    return render_template("home.html", books=records)
+    if query:
+        # Function to search books based on query
+        total_books = ss.query_records("books", query)
+        books = total_books[:12]
+    else:
+        # Function to get all books if no query
+        books, total_books = ss.get_records("books")
+        books = total_books[:12]
+
+
+    return render_template("home.html", books=books)
+
 
 
 
@@ -158,6 +172,31 @@ def send_inquiry():
 
 
     inquiry_text = request.args.get('inquiry_text')
+
+    print(inquiry_text)
+    return render_template("send_inquiry.html", inquiry_text=inquiry_text)
+
+@home_routes.route("/delist-book", methods=["POST"])
+def delist_book():
+    ss=SpreadsheetService()
+    book_title = request.form.get('book_title')
+    current_user = session['current_user'] 
+    user_email = current_user.get('email')
+    try:
+        ss.remove_record("books", book_title, user_email)
+        print("records found and removed")
+    except:
+        print("No records found for user and title")
+    return redirect(url_for('home_routes.account'))
+
+@home_routes.route("/inquiry-sent", methods=['POST'])
+def inquiry_sent():
+    inquiry_text = request.form.get('inquiry_text')
+    seller_email = request.form.get('seller_email')
+    send_email(seller_email, "YOU HAVE A POTENTIAL BOOK BUYER", inquiry_text)
+    flash("Your inquiry has been sent")
+    return redirect(url_for('home_routes.index'))
+
 
     print(inquiry_text)
     return render_template("send-inquiry.html", inquiry_text=inquiry_text)
