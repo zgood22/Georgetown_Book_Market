@@ -52,5 +52,6 @@ jobs:
         # access path of credentials file created by earlier auth step:
         #GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
         GOOGLE_CREDENTIALS_FILEPATH: ${{ steps.auth.outputs.credentials_file_path }}
+        ISBNdb_key: ${{ secrets.ISBNDB_KEY }}
       run: |
         CI=true TEST_SLEEP=20 pytest
