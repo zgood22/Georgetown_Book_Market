@@ -30,8 +30,8 @@ NAV_ICON_CLASS = "bi-globe"
 NAV_COLOR_CLASS = "navbar-dark bg-primary"
 
 # for google oauth login:
-GOOGLE_CLIENT_ID1 = os.getenv("GOOGLE_CLIENT_ID1")
-GOOGLE_CLIENT_SECRET1 = os.getenv("GOOGLE_CLIENT_SECRET1")
+#GOOGLE_CLIENT_ID1 = os.getenv("GOOGLE_CLIENT_ID1")
+#GOOGLE_CLIENT_SECRET1 = os.getenv("GOOGLE_CLIENT_SECRET1")
 
 #Google Sheets API
 GOOGLE_CLIENT_ID=os.getenv("GOOGLE_CLIENT_ID")
@@ -84,8 +84,8 @@ def create_app(spreadsheet_service=None):
         name="google",
         server_metadata_url="https://accounts.google.com/.well-known/openid-configuration",
         client_kwargs={"scope": "openid email profile"},
-        client_id=GOOGLE_CLIENT_ID1,
-        client_secret=GOOGLE_CLIENT_SECRET1,
+        client_id=GOOGLE_CLIENT_ID,
+        client_secret=GOOGLE_CLIENT_SECRET,
         #authorize_params={"access_type": "offline"} # give us the refresh token! see: https://stackoverflow.com/questions/62293888/obtaining-and-storing-refresh-token-using-authlib-with-flask
     )
     app.config["OAUTH"] = oauth

@@ -11,21 +11,31 @@ from app.ss import SpreadsheetService
 
 load_dotenv()
 
-DEFAULT_FILEPATH = os.path.join(os.path.dirname(__file__), "..", "google-credentials.json")
-GOOGLE_CREDENTIALS_FILEPATH = os.getenv("GOOGLE_CREDENTIALS_FILEPATH", default=DEFAULT_FILEPATH)
-
-GOOGLE_SHEETS_DOCUMENT_ID = os.getenv("GOOGLE_SHEETS_DOCUMENT_ID", default="OOPS Please get the spreadsheet identifier from its URL, and set the 'GOOGLE_SHEETS_DOCUMENT_ID' environment variable accordingly...")
 
 ss = SpreadsheetService()
 #
-#def test_create_records():
-#    new_record = {"id": "test", "user_email": "test","user_name": "test","genre": "test","title": "test","author": "test","published_date": "test","condition": "test","list_price": "test","image_url": "test","created_at": "2023-03-08 19:59:16.471152+00:00",}
-#    
-#    ss.create_records("test", new_record)
-#    
-#    sheet, records = ss.get_records("test")
-#
-#    assert sheet == "test"
+def test_create_records():
+    new_record = {
+        "id": "test", 
+        "user_email": "test@test.com",  # Use a valid email format for consistency
+        "user_name": "Test User",
+        "genre": "Test Genre",
+        "title": "Test Title",
+        "author": "Test Author",
+        "published_date": "2023-03-08",
+        "condition": "New",
+        "list_price": "10.99",
+        "image_url": "http://testurl.com/testimage.jpg",
+        "created_at": "2023-03-08 19:59:16.471152+00:00"
+    }
+    
+    ss.create_records("books", new_record)  # Assuming "books" is the correct sheet name
+    
+    sheet, records = ss.get_records("books")
+    record = [book for book in records if book['title'].lower() == "test title"]
+    
+    assert len(record) > 0 and record[0]['title'] == "Test Title"
+
 
 
 def test_get_records():
@@ -33,8 +43,11 @@ def test_get_records():
     assert records[1]['genre'] == "Fiction"
 
 
-#def test_query_record():
-
+def test_query_record():
+    record = ss.query_records("books", "Mockingjay")
+    
+    assert record('title') == "Mockingjay"
+    
 
 
 
