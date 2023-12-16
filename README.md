@@ -1,8 +1,7 @@
-# flask-sheets-template-2023
+# Georgetown-Book-Exchange
 
-A web application starter template, created in Python with the Flask framework. Allows users to login with their Google accounts (via OAuth). Interfaces with a Google Sheets database.
+A web application based on a flask template provided my Prof. Rossetti. The Book Exchange is a central hub for Georgetown Students to exchange books.
 
-![](https://user-images.githubusercontent.com/1328807/160312385-7ffbbada-4363-4b48-873d-9eca868afef0.png)
 
 ## Prerequisites
 
@@ -15,7 +14,7 @@ For beginners, here are some instructions for how to install Anaconda, and [set 
 
 ## Repo Setup
 
-Make a copy of this template repo (as necessary). Clone your copy of the repo onto your local machine. Navigate there from the command-line.
+If you are trying to recreate the book exchange, Make a copy of this template repo (as necessary). Clone your copy of the repo onto your local machine. Navigate there from the command-line.
 
 Setup and activate a new Anaconda virtual environment:
 
