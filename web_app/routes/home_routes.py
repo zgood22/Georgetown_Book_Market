@@ -140,13 +140,14 @@ def delist_book():
 def inquiry_sent():
     inquiry_text = request.form.get('inquiry_text')
     seller_email = request.form.get('seller_email')
+    book_name = request.form.get('book_title')
     user = session['current_user']
     buyer_email = user.get('email') 
-    book_image = request.form.get('book_image')
+    book_image = request.form.get('book_image_url')
     html_content = f"""
     <p>Greetings, you have a purchase inquiry from {buyer_email}. They left you this message about your listing:</p>
     <blockquote>{inquiry_text}</blockquote>
-    <p>They are inquiring about the following book:</p>
+    <p>They are inquiring about your posting of {book_name}:</p>
     <img src="{book_image}" alt="Book Image" style="max-width:100%;height:auto;">
     """
     send_email(seller_email, "YOU HAVE A POTENTIAL BOOK BUYER", html_content)
