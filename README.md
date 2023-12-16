@@ -132,8 +132,8 @@ See more information about the [CI](/admin/CI.md) build process.
 
 ## Deploying
 
-See the [Deployer's Guide](/admin/RENDER.md) for instructions on deploying to a production server hosted by Render.
+See the [Deployer's Guide](/admin/RENDER.md), provided my Prof Rossetti for instructions on deploying to a production server hosted by Render.
 
 
 
-## [License](/LICENSE.md)
+## See Liscence.MD File for more infomration about how to use this repository
