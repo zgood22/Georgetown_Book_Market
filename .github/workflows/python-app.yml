@@ -55,8 +55,6 @@ jobs:
         ISBNdb_key: ${{ secrets.ISBNDB_KEY }}
         GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
         GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-        GOOGLE_CLIENT_ID1: ${{ secrets.GOOGLE_CLIENT_ID1 }}
-        GOOGLE_CLIENT_SECRET1: ${{ secrets.GOOGLE_CLIENT_SECRET1 }}
         GOOGLE_SHEETS_TEST_DOCUMENT_ID: ${{ secrets.GOOGLE_SHEETS_TEST_DOCUMENT_ID }}
         
         
