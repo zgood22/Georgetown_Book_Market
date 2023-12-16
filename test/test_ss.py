@@ -27,7 +27,7 @@ def test_generate_timestamp():
 
 
 
-
+@pytest.mark.skipif(CI_ENV, reason=CI_SKIP_MESSAGE)
 def test_get_records():
 
     

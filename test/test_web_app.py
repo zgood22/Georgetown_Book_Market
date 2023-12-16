@@ -1,7 +1,14 @@
+import pytest
+import os
 from app.ss import SpreadsheetService
 
-# tests for each page:
 
+
+CI_ENV = (os.getenv("CI", default="false") == "true")
+CI_SKIP_MESSAGE = "taking a lighter touch to testing on the CI server, to reduce API usage and prevent rate limits"
+
+# tests for each page:
+@pytest.mark.skipif(CI_ENV, reason=CI_SKIP_MESSAGE)
 def test_home_page(test_client):
     response = test_client.get("/")
     assert response.status_code == 200
