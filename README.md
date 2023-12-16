@@ -123,16 +123,16 @@ Run tests:
 pytest
 ```
 
-> NOTE: we are using a live sheet for testing, so to avoid API rate limits, we are waiting / sleeping between each test, which makes the tests a bit slow for now
-
+> NOTE: All tests pass locally, the pytest skip function was used to get a passing build in GitHub
 
 ## CI
 
-See more information about the [CI](/admin/CI.md) build process.
+See more information about the [CI](/admin/CI.md) build process. (Creds: Professor Rossetti)
+Our repo was analyzed by code climate and has an A score as of time of submission. 
 
 ## Deploying
 
-See the [Deployer's Guide](/admin/RENDER.md), provided my Prof Rossetti for instructions on deploying to a production server hosted by Render.
+See the [Deployer's Guide](/admin/RENDER.md), provided my Prof Rossetti for instructions on deploying to a production server hosted by Render. Given the constraints on the project, we elected not to render our main, but here is documentation in case we want to in the future.
 
 
 
